@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Registration</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Add your custom styles here */
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>User Registration</h1>
+    <form id="registrationForm">
+      <div class="form-group">
+        <label for="username">Username</label>
+        <input type="text" class="form-control" id="username" name="username" required>
+      </div>
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" name="email" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+
+    <h2>Registered Users</h2>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Username</th>
+          <th>Email</th>
+        </tr>
+      </thead>
+      <tbody id="userTableBody">
+        <!-- Registered users will be displayed here -->
+      </tbody>
+    </table>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      // Display existing registrations from local storage
+      displayRegistrations();
+
+      $('#registrationForm').submit(function(e) {
+        e.preventDefault(); // Prevent the form from submitting normally
+
+        // Get form data
+        var username = $('#username').val();
+        var email = $('#email').val();
+
+        // Store data in local storage
+        var registration = { username: username, email: email };
+        var registrations = JSON.parse(localStorage.getItem('registrations')) || [];
+        registrations.push(registration);
+        localStorage.setItem('registrations', JSON.stringify(registrations));
+
+        // Display newly registered user
+        displayRegistrations();
+
+        // Clear form fields
+        $('#username').val('');
+        $('#email').val('');
+      });
+    });
+
+    // Function to display registrations from local storage
+    function displayRegistrations() {
+      var registrations = JSON.parse(localStorage.getItem('registrations')) || [];
+      var tableBody = $('#userTableBody');
+      tableBody.empty();
+
+      registrations.forEach(function(registration) {
+        var row = '<tr><td>' + registration.username + '</td><td>' + registration.email + '</td></tr>';
+        tableBody.append(row);
+      });
+    }
+  </script>
+</body>
+</html>
