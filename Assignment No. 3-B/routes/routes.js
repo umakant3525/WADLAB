@@ -2,9 +2,9 @@ const express = require('express');
 const Model = require('../models/model');
 const router = express.Router();
 
-
-router.post('/hello', async (req, res) => {
-    res.send("Hello my backend is working ")
+//http://localhost:3000/api/hello
+router.get('/hello', async (req, res) => {
+    res.send("Hello my hello backend is working ")
 })
 
 
